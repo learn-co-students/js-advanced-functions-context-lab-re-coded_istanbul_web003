@@ -20,3 +20,71 @@ let allWagesFor = function () {
 
     return payable
 }
+function createEmployeeRecord(arr){
+    const obj = {};
+    obj["firstName"] = arr[0];
+    obj["familyName"] = arr[1];
+    obj["title"] = arr[2];
+    obj["payPerHour"] = arr[3];
+    obj["timeInEvents"] = [];
+    obj["timeOutEvents"] = [];
+    return obj
+
+}
+function createEmployeeRecords(arrOfArr) {
+    return arrOfArr.map(a => createEmployeeRecord(a))
+    
+}
+function createTimeInEvent(dateStamp) {
+    let[date, hour] = dateStamp.split(" ");
+    this.timeInEvents.push({
+        type: "TimeIn",
+        hour: parseInt(hour),
+        date
+    })
+    return this
+}
+function createTimeOutEvent(dateStamp) {
+    let[date, hour] = dateStamp.split(" ");
+    this.timeOutEvents.push({
+        type: "TimeOut",
+        hour: parseInt(hour),
+        date
+    })
+    return this
+}
+function hoursWorkedOnDate(soughtDate) {
+    let inEvent = this.timeInEvents.find(t => t.date === soughtDate)
+    let outEvent = this.timeOutEvents.find(t => t.date === soughtDate)
+    return (outEvent.hour - inEvent.hour) / 100
+    
+}
+function wagesEarnedOnDate(soughtDate) {
+    return Math.round(hoursWorkedOnDate.call(this,soughtDate) * this.payPerHour)    
+    
+}
+function findEmployeeByFirstName(records, name) {
+    let res = records.filter(r => r.firstName === name)
+    return res[0]
+}
+function calculatePayroll(records) {
+    return records.reduce((acc, cur)=> acc + allWagesFor.call(cur),0)
+}
+/*
+cRecord = createEmployeeRecord(["Julius", "Caesar", "General", 1000])
+createTimeInEvent.call(cRecord, "44-03-15 0900")
+createTimeOutEvent.call(cRecord, "44-03-15 1100")
+console.log(hoursWorkedOnDate.call(cRecord, "44-03-15"))
+
+cRecord = createEmployeeRecord(["Julius", "Caesar", "General", 27])
+        createTimeInEvent.call(cRecord, "44-03-15 0900")
+        createTimeOutEvent.call(cRecord, "44-03-15 1100")
+        console.log(wagesEarnedOnDate.call(cRecord, "44-03-15")) 
+
+        let src = [
+            ["Loki", "Laufeysson-Odinsson", "HR Representative", 35],
+            ["Natalia", "Romanov", "CEO", 150]
+          ]
+          let emps = createEmployeeRecords(src)
+          let loki = findEmployeeByFirstName(emps, "Loki")
+          console.log(loki.familyName)*/
