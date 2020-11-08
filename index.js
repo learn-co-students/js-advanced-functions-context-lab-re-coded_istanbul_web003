@@ -23,6 +23,68 @@ function createEmployeeRecords(employees) {
     return employeeRecords
 }
 
+function createTimeInEvent(dateInfo) {
+    let date = dateInfo.split(" ");
+    let time = date[1];
+    let hour = parseInt(time)%100;
+    let minutes = parseInt(time)-hour;
+    let recordObject = {
+      type: "TimeIn",
+      hour: parseInt(time),
+      date: date[0],
+    };
+  
+    this.timeInEvents.push(recordObject);
+  
+    return this;
+  }
+  
+function createTimeOutEvent(dateInfo) {
+    let date = dateInfo.split(" ");
+    let time = date[1];
+    let hour = parseInt(time)%100;
+    let recordObject = {
+      type: "TimeOut",
+      hour: parseInt(time),
+      date: date[0],
+    };
+  
+    this.timeOutEvents.push(recordObject);
+  
+    return this;
+  }
+  
+function hoursWorkedOnDate(date) {
+      for (let i = 0; i < this.timeInEvents.length; i++) {
+          if (this.timeInEvents[i].date === date && this.timeOutEvents[i].date === date) {
+              return (this.timeOutEvents[i].hour - this.timeInEvents[i].hour)/100
+          }
+  
+      }
+  }
+  
+function wagesEarnedOnDate(date) {
+      let hours = hoursWorkedOnDate.call(this, date) 
+          return hours * this.payPerHour
+  
+  }
+  
+function findEmployeeByFirstName(myArray, firstName) {
+    for (let i = 0; i < myArray.length; i++) {
+        if(myArray[i].firstName) {
+            return myArray[i]
+        }
+    }
+    return undefined
+}
+
+function calculatePayroll(myArray) {
+    let sum = 0
+    for (let i = 0; i < myArray.length; i++) {
+        sum += allWagesFor.call(myArray[i])
+    }
+    return sum
+}
 
 /*
  We're giving you this function. Take a look at it, you might see some usage
