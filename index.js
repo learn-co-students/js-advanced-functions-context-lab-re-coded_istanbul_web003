@@ -1,4 +1,28 @@
-/* Your Code Here */
+function createEmployeeRecord([firstName, familyName, title, payPerHour]) {
+    return {
+        firstName : firstName,
+        familyName : familyName,
+        title : title,
+        payPerHour : payPerHour,
+        timeInEvents : [],
+        timeOutEvents : []
+    }
+}
+
+function createEmployees(employees) {
+    return employees.map(employee => {
+        return createEmployeeRecord(employee)
+    })
+}
+
+function createEmployeeRecords(employees) {
+    let employeeRecords = []
+    for(let i = 0; i<employees.length ; i++) {
+        employeeRecords.push(createEmployeeRecord(employees[i]))
+    }
+    return employeeRecords
+}
+
 
 /*
  We're giving you this function. Take a look at it, you might see some usage
